@@ -95,13 +95,29 @@ TARGET_DEVICES += yx_imb3588
 
 sed -i "s/armsom,sige7-v1|/yx,imb3588|armsom,sige7-v1|/g" target/linux/rockchip/rk35xx/base-files/etc/board.d/02_network
 
+# 添加a588
+echo "
+define Device/dc_a588
+\$(call Device/rk3588)
+  DEVICE_VENDOR := DC
+  DEVICE_MODEL := A588
+  DEVICE_PACKAGES := kmod-r8125 kmod-nvme kmod-scsi-core kmod-hwmon-pwmfan kmod-thermal kmod-rkwifi-bcmdhd-pcie rkwifi-firmware-ap6275p
+  SUPPORTED_DEVICES += dc,a588
+  DEVICE_DTS := rk3588-dc-a588
+endef
+TARGET_DEVICES += dc_a588
+" >>  target/linux/rockchip/image/rk35xx.mk
+
+sed -i "s/armsom,sige7-v1|/yx,imb3588|dc,a588|armsom,sige7-v1|/g" target/linux/rockchip/rk35xx/base-files/etc/board.d/02_network
+
 echo " 
 CONFIG_TARGET_DEVICE_rockchip_rk35xx_DEVICE_yx_imb3588=y
-CONFIG_TARGET_DEVICE_rockchip_rk35xx_DEVICE_dcztl_dc-a588=y
+CONFIG_TARGET_DEVICE_rockchip_rk35xx_DEVICE_dc-a588=y
 " >>  .config
 
 # 添加dts
 cp -f $GITHUB_WORKSPACE/configfiles/rk3588-yx-imb3588.dts target/linux/rockchip/dts/rk3588/rk3588-yx-imb3588.dts
+cp -f $GITHUB_WORKSPACE/configfiles/rk3588-dc-a588.dts target/linux/rockchip/dts/rk3588/rk3588-dc-a588.dts
 
 #添加qmodem
 git clone --depth=1 -b main https://github.com/FUjr/QModem package/modem
