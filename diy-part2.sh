@@ -7,9 +7,6 @@
 # Blog: https://p3terx.com
 #===============================================
 
-# 删除引起iproute2依赖编译报错的补丁
-[ -e package/libs/elfutils/patches/999-fix-odd-build-oot-kmod-fail.patch ] && rm -f package/libs/elfutils/patches/999-fix-odd-build-oot-kmod-fail.patch
-
 # enable rk3568 model adc keys
 cp -f $GITHUB_WORKSPACE/configfiles/adc-keys.txt adc-keys.txt
 ! grep -q 'adc-keys {' package/boot/uboot-rk35xx/src/arch/arm/dts/rk3568-easepi.dts && sed -i '/\"rockchip,rk3568\";/r adc-keys.txt' package/boot/uboot-rk35xx/src/arch/arm/dts/rk3568-easepi.dts
@@ -32,16 +29,16 @@ sed -i "/.*CONFIG_ROCKCHIP_RGA2.*/d" target/linux/rockchip/rk35xx/config-5.10
 
 
 # 替换dts文件
-cp -f $GITHUB_WORKSPACE/configfiles/rk3566-jp-tvbox.dts target/linux/rockchip/dts/rk3568/rk3566-jp-tvbox.dts
+cp -f $GITHUB_WORKSPACE/configfiles/dts/rk3566-jp-tvbox.dts target/linux/rockchip/dts/rk3568/rk3566-jp-tvbox.dts
 
-cp -f $GITHUB_WORKSPACE/configfiles/rk3566-panther-x2.dts target/linux/rockchip/dts/rk3568/rk3566-panther-x2.dts
+cp -f $GITHUB_WORKSPACE/configfiles/dts/rk3566-panther-x2.dts target/linux/rockchip/dts/rk3568/rk3566-panther-x2.dts
 
-cp -f $GITHUB_WORKSPACE/configfiles/rk3568-dg-nas-lite-core.dtsi target/linux/rockchip/dts/rk3568/rk3568-dg-nas-lite-core.dtsi
-cp -f $GITHUB_WORKSPACE/configfiles/rk3568-dg-nas-lite.dts target/linux/rockchip/dts/rk3568/rk3568-dg-nas-lite.dts
+cp -f $GITHUB_WORKSPACE/configfiles/dts/rk3568-dg-nas-lite-core.dtsi target/linux/rockchip/dts/rk3568/rk3568-dg-nas-lite-core.dtsi
+cp -f $GITHUB_WORKSPACE/configfiles/dts/rk3568-dg-nas-lite.dts target/linux/rockchip/dts/rk3568/rk3568-dg-nas-lite.dts
 
-cp -f $GITHUB_WORKSPACE/configfiles/rk3568-mrkaio-m68s-core.dtsi target/linux/rockchip/dts/rk3568/rk3568-mrkaio-m68s-core.dtsi
-cp -f $GITHUB_WORKSPACE/configfiles/rk3568-mrkaio-m68s.dts target/linux/rockchip/dts/rk3568/rk3568-mrkaio-m68s.dts
-cp -f $GITHUB_WORKSPACE/configfiles/rk3568-mrkaio-m68s-plus.dts target/linux/rockchip/dts/rk3568/rk3568-mrkaio-m68s-plus.dts
+cp -f $GITHUB_WORKSPACE/configfiles/dts/rk3568-mrkaio-m68s-core.dtsi target/linux/rockchip/dts/rk3568/rk3568-mrkaio-m68s-core.dtsi
+cp -f $GITHUB_WORKSPACE/configfiles/dts/rk3568-mrkaio-m68s.dts target/linux/rockchip/dts/rk3568/rk3568-mrkaio-m68s.dts
+cp -f $GITHUB_WORKSPACE/configfiles/dts/rk3568-mrkaio-m68s-plus.dts target/linux/rockchip/dts/rk3568/rk3568-mrkaio-m68s-plus.dts
 
 
 
@@ -74,8 +71,8 @@ chmod 755 package/base-files/files/etc/init.d/opwifi
 
 
 # 集成CPU性能跑分脚本
-cp -a $GITHUB_WORKSPACE/configfiles/coremark/* package/base-files/files/bin/
-chmod 755 package/base-files/files/bin/coremark
+echo "CONFIG_PACKAGE_coremark=y" >> .config
+cp -f $GITHUB_WORKSPACE/configfiles/coremark/coremark.sh package/base-files/files/bin/coremark.sh
 chmod 755 package/base-files/files/bin/coremark.sh
 
 
