@@ -223,4 +223,3 @@ CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Xray=y
 CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ChinaDNS_NG=y
 CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_MosDNS=y
 " >> .config
-" >> .config
