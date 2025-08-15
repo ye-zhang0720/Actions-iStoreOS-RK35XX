@@ -14,7 +14,7 @@
 
 / {
 	model = "Alientek ATK-DLRK3568 Board";
-	compatible = "rockchip,rk3568-evb1-ddr4-v10", "rockchip,rk3568";
+	compatible = "atk,rk3568-evb1-ddr4-v10", "rockchip,rk3568";
 
 	vcc2v5_sys: vcc2v5-ddr {
 		compatible = "regulator-fixed";
